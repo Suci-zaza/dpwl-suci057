@@ -10,5 +10,5 @@ spl_autoload_register(function ($Latihan1Controller) {
         }
     }
 
-    echo "Class" $Latihan1Controller . " tidak ditemukan.";
-})
+    echo "Class  '$Latihan1Controller'   tidak ditemukan.";
+});
