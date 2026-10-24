@@ -3,7 +3,7 @@
 
 class Latihan1Model
 {
-    public function getDataMahasiswa()
+    public function getAllMhs()
     {
         return [
             [

@@ -1,7 +1,7 @@
 <?php
 class Controller
 {
-    public function _construct()
+    public function __construct() 
     {
         $this->load = new class {
             public function view($latihan1view, $data = [])
@@ -14,6 +14,6 @@ class Controller
                 require_once 'model/' . $Latihan1Model . '.php';
                 return new $Latihan1Model();
             }
-        }
+        };
     }
 }
