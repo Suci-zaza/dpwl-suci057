@@ -1,6 +1,6 @@
 <?php
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = '';
-$dbname = 'db_rental_mobil';
-$dbpass = '3306';
+$dbhost     = 'localhost';
+$dbusername = 'root';
+$dbpassword = '';             // Laragon bawaan password-nya kosong
+$dbname     = 'db_rental_mobil';
+$dbport     = 3306;           // Tambahkan variabel ini
