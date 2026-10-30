@@ -1,14 +1,14 @@
 <?php
-spl_autoload_register(function ($Latihan1Controller) {
-    $paths = ['controller/', 'model/', 'config/', 'core/'];
+spl_autoload_register(function ($Mobil_c) {
+    $paths = ['controller/', 'model/', 'config/', 'core/','controller/c_master/'];
 
     foreach ($paths as $path) {
-        $file = $path . $Latihan1Controller . '.php';
+        $file = $path . $Mobil_c . '.php';
         if (file_exists($file)) {
             require_once $file;
             return;
         }
     }
 
-    echo "Class  '$Latihan1Controller'   tidak ditemukan.";
+    echo "Class  '$Mobil_c'   tidak ditemukan.";
 });

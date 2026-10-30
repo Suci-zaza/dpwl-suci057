@@ -4,28 +4,33 @@ require_once 'config/routes.php';
 require_once 'config/confiq.php';
 require_once 'helper/url_helper.php';
 
-$url = $_GET['url'] ?? $route['default_controller'] . '/' . ($route['default_method'] ?? 'index');
+// 1. Ambil URL dan bersihkan dari slash berlebih
+$url = $_GET['url'] ?? '';
+$url = rtrim($url, '/');
+$url = filter_var($url, FILTER_SANITIZE_URL);
 
-$segment = explode('/', $url);
-$controller = $segment[0] ?? $route['default_controller'];
-$method     = $segment[1] ?? ($route['default_method'] ?? 'index');
-$parameter  = $segment[2] ?? null;
+// 2. Olah segmen URL
+if (empty($url)) {
+    $controllerName = ucfirst($route['default_controller']);
+    $method         = $route['default_method'] ?? 'index';
+    $parameters     = [];
+} else {
+    $segment        = explode('/', $url);
+    $controllerName = ucfirst($segment[0]);
+    $method         = $segment[1] ?? ($route['default_method'] ?? 'index');
+    $parameters     = array_slice($segment, 2); // Mengambil sisa segmen sebagai parameter
+}
 
-$controllerName = ucfirst($controller);
-$controllerFile = 'controller/' . $controllerName . '.php';
-
-if (file_exists($controllerFile)) {
-    require_once $controllerFile;
+// 3. Panggil Autoloader secara otomatis dengan class_exists()
+if (class_exists($controllerName)) {
     $objController = new $controllerName();
+
     if (method_exists($objController, $method)) {
-        if ($parameter !== null) {
-            $objController->$method($parameter);
-        } else {
-            $objController->$method();
-        }
+        // Panggil method beserta parameternya secara dinamis
+        call_user_func_array([$objController, $method], $parameters);
     } else {
-        echo "Method tidak ditemukan.";
+        echo "Method '$method' tidak ditemukan pada Controller '$controllerName'.";
     }
 } else {
-    echo "Controller tidak ditemukan.";
+    echo "Controller '$controllerName' tidak ditemukan.";
 }
