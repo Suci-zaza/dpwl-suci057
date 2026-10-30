@@ -8,7 +8,7 @@ class Controller
             public function view($viewName, $data = [])
             {
                 if (!empty($data)) extract($data);
-                include './view/' . $viewName . '.php';
+               include __DIR__ . '/../view/' . $viewName . '.php';
             }
             public function model($modelName)
             {
