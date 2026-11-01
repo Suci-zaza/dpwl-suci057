@@ -5,12 +5,13 @@ class Model
 
     public function __construct()
     {
-        require_once __DIR__ . '/../config/database.php';
+        // Gunakan require (bukan require_once) agar variabel lokal selalu dimuat
+        require __DIR__ . '/../config/database.php';
 
         $this->db = new mysqli(
             $dbhost, 
-            $dbusername,  // Harus sama dengan di config/database.php
-            $dbpassword,  // Harus sama dengan di config/database.php
+            $dbusername, 
+            $dbpassword, 
             $dbname, 
             $dbport
         );
