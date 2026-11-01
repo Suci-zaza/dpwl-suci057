@@ -6,7 +6,6 @@ class Login_C extends Controller
 
     public function CekLogin()
     {
-        // Diubah dari $email menjadi $username agar sesuai dengan penggunaan di bawahnya
         $username = $this->load->post('username'); 
         $password = $this->load->post('password');
         
@@ -22,4 +21,13 @@ class Login_C extends Controller
             redirect('login_C/index');
         }
     }
-} // Kurung kurawal penutup class Login_C ({} ekstra pada baris 22 sudah dihapus)
+
+    // --- FUNCTION LOGOUT SESUAI GAMBAR ---
+    public function keluar()
+    {
+        $this->session->unset_userdata('emailuser');
+        $this->session->set_flashdata('pesan', 'Berhasil Logout');
+        redirect('login_C/index');
+        exit;
+    }
+}

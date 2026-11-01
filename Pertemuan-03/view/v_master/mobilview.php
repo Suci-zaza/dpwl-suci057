@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -29,7 +27,7 @@
                 <a href="<?= base_url('Mobil_c/create_mobil')?>" class="btn btn-primary">
                     <i class="fas fa-car"></i>    
                 Tambah Data Mobil</a>
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped mt-3">
                     <thead>
                         <tr>
                             <th>No.Plat</th>
@@ -54,17 +52,29 @@
                                 <td><?= $m['nbagasi'] ?></td>
                                 <td><?= $m['jns_mobil'] . '<br>' . $m['transmisi'] ?></td>
                                 <td><?= $m['thn_buat'] ?></td>
-                                <td><?= $m['ft_depan'] . '<br>' . $m['ft_blkg'] . '<br>' . $m['ft_interior'] ?></td>
+                                <td>
+                                    <?php if (!empty($m['ft_depan'])) : ?>
+                                        <img src="<?= base_url('img/' . $m['ft_depan']); ?>" style="width: 50px; height: auto;"><br>
+                                    <?php endif; ?>
+                                    <?php if (!empty($m['ft_blkg'])) : ?>
+                                        <img src="<?= base_url('img/' . $m['ft_blkg']); ?>" style="width: 50px; height: auto;"><br>
+                                    <?php endif; ?>
+                                    <?php if (!empty($m['ft_interior'])) : ?>
+                                        <img src="<?= base_url('img/' . $m['ft_interior']); ?>" style="width: 50px; height: auto;">
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= $m['hrg_hari'] ?></td>
                                 <td><?= $m['cttn_unit'] ?></td>
                                 <td><?= $m['status_unit'] ?></td>
                                 <td>
-                                    <!-- Tambahkan tombol aksi sesuai kebutuhan -->
-                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                                    <!-- Tombol Edit (Warna Kuning / warning) -->
+                                    <a href="<?= base_url('Mobil_c/edit/' . $m['no_plat']); ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    
+                                    <!-- Tombol Hapus Sesuai Gambar -->
+                                    <a href="<?= base_url('Mobil_c/hapus/' . $m['no_plat']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</a>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
