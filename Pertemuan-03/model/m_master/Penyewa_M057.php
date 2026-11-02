@@ -19,7 +19,7 @@ class Penyewa_M057 extends Model
 
     public function simpan($data)
     {
-        $sql = $this->db->prepare("INSERT INTO penyewa (user_plg057, Sandi057, Nik057, nm_lngkp057, no_hp057, almt_lngkp057, ft_ktp, ft_sim_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $sql = $this->db->prepare("INSERT INTO penyewa (user_plg057, Sandi057, Nik057, nm_lngkp057, no_hp057, almt_lngkp057, ft_ktp057, ft_sim_a057) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
         $sql->bind_param(
             "ssssssss",

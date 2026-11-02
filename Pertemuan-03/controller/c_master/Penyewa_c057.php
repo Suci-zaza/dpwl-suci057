@@ -15,16 +15,17 @@ class Penyewa_C057 extends Controller
     $this->load->view('layout/footer');
 }
 
-    public function create_pen()
-    {
-        $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
-        $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
 
-        $this->load->view('layout/header');
-        $this->load->view('layout/sidebar', $info);
-        $this->load->view('v_master/create_penyewaview057');
-        $this->load->view('layout/footer');
-    }
+public function create_penyewa057()
+{
+    $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
+    $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
+
+    $this->load->view('layout/header');
+    $this->load->view('layout/sidebar', $info);
+    $this->load->view('v_master/create_penyewaview057');
+    $this->load->view('layout/footer');
+}
     
     public function simpan()
     {

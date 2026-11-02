@@ -24,7 +24,7 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-                <a href="<?= base_url('Penyewa_C057/create_pen') ?>" class="btn btn-primary">
+                <a href="<?= base_url('Penyewa_C057/create_penyewa057') ?>" class="btn btn-primary">
                     <i class="fas fa-plus-circle"></i> Tambah Data Penyewa
                 </a>
                 <table class="table table-bordered table-striped mt-3">
