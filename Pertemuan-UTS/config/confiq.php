@@ -1,4 +1,4 @@
 
 <?php
 
-$config['base_url'] = 'http://localhost/dpwl-suci057/Pertemuan-03/';
+$config['base_url'] = 'http://localhost/dpwl-suci057/Pertemuan-UTS/';
