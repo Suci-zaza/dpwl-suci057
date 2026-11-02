@@ -2,14 +2,18 @@
 class Penyewa_C057 extends Controller
 {
     public function index()
-    {
-        $cekdata = $this->load->model('m_master/Penyewa_M057');
-        $dt['dbpenyewa'] = $cekdata->datapenyewa();
-        $this->load->view('layout/header');
-        $this->load->view('layout/sidebar');
-        $this->load->view('v_master/penyewaview', $dt);
-        $this->load->view('layout/footer');
-    }
+{
+    $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
+    $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
+
+    $cekdata = $this->load->model('m_master/Penyewa_M057');
+    $dt['dbpenyewa'] = $cekdata->datapenyewa();
+    
+    $this->load->view('layout/header');
+    $this->load->view('layout/sidebar', $info);
+    $this->load->view('v_master/penyewaview057', $dt); // <-- Ubah penamaan view di sini
+    $this->load->view('layout/footer');
+}
 
     public function create_pen()
     {
