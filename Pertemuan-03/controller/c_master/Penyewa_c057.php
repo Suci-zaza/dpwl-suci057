@@ -2,31 +2,30 @@
 class Penyewa_C057 extends Controller
 {
     public function index()
-{
-    $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
-    $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
+    {
+        $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
+        $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
 
-    $cekdata = $this->load->model('m_master/Penyewa_M057');
-    $dt['dbpenyewa'] = $cekdata->datapenyewa();
-    
-    $this->load->view('layout/header');
-    $this->load->view('layout/sidebar', $info);
-    $this->load->view('v_master/penyewaview057', $dt); // <-- Ubah penamaan view di sini
-    $this->load->view('layout/footer');
-}
+        $cekdata = $this->load->model('m_master/Penyewa_M057');
+        $dt['dbpenyewa'] = $cekdata->datapenyewa();
+        
+        $this->load->view('layout/header');
+        $this->load->view('layout/sidebar', $info);
+        $this->load->view('v_master/penyewaview057', $dt);
+        $this->load->view('layout/footer');
+    }
 
+    public function create_penyewa057()
+    {
+        $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
+        $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
 
-public function create_penyewa057()
-{
-    $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
-    $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
+        $this->load->view('layout/header');
+        $this->load->view('layout/sidebar', $info);
+        $this->load->view('v_master/create_penyewaview057');
+        $this->load->view('layout/footer');
+    }
 
-    $this->load->view('layout/header');
-    $this->load->view('layout/sidebar', $info);
-    $this->load->view('v_master/create_penyewaview057');
-    $this->load->view('layout/footer');
-}
-    
     public function simpan()
     {
         $penyewa     = $this->load->model('m_master/Penyewa_M057');
@@ -110,6 +109,7 @@ public function create_penyewa057()
 
         $penyewa       = $this->load->model('m_master/Penyewa_M057');
         $dt['penyewa'] = $penyewa->detailpenyewa($user_plg057);
+
         $this->load->view('layout/header');
         $this->load->view('layout/sidebar', $info);
         $this->load->view('v_master/update_penyewaview057', $dt);
@@ -125,7 +125,6 @@ public function create_penyewa057()
         $ft_sim_a_asli = $this->load->post('ft_sim_a_asli');
         $target_folder = dirname(__DIR__, 2) . '/img/';
 
-        // --- Upload foto KTP baru ---
         if (isset($_FILES['ft_ktp']) && $_FILES['ft_ktp']['error'] != UPLOAD_ERR_NO_FILE) {
             $nmgambar = $_FILES['ft_ktp']['tmp_name'];
             $ekstensi = strtolower(pathinfo($_FILES['ft_ktp']['name'], PATHINFO_EXTENSION));
@@ -140,7 +139,6 @@ public function create_penyewa057()
             $ft_ktp = $ft_ktp_asli;
         }
 
-        // --- Upload foto SIM A baru ---
         if (isset($_FILES['ft_sim_a']) && $_FILES['ft_sim_a']['error'] != UPLOAD_ERR_NO_FILE) {
             $nmgambar = $_FILES['ft_sim_a']['tmp_name'];
             $ekstensi = strtolower(pathinfo($_FILES['ft_sim_a']['name'], PATHINFO_EXTENSION));
@@ -184,8 +182,8 @@ public function create_penyewa057()
     {
         $penyewa       = $this->load->model('m_master/Penyewa_M057');
         $dt['Penyewa'] = $penyewa->detailpenyewa($user_plg057);
-        $ft_ktp   = $dt['Penyewa']['ft_ktp'];
-        $ft_sim_a = $dt['Penyewa']['ft_sim_a'];
+        $ft_ktp   = $dt['Penyewa']['ft_ktp057'] ?? '';
+        $ft_sim_a = $dt['Penyewa']['ft_sim_a057'] ?? '';
 
         $hapus = $penyewa->HapusDtPenyewa($user_plg057);
         if ($hapus) {

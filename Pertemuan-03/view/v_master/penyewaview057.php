@@ -47,11 +47,11 @@
                                     <td><?= htmlspecialchars($p['no_hp057']) ?></td>
                                     <td><?= htmlspecialchars($p['almt_lngkp057']) ?></td>
                                     <td>
-                                        <?php if (!empty($p['ft_ktp'])) : ?>
-                                            <img src="<?= base_url('img/' . $p['ft_ktp']); ?>" style="width: 60px; height: auto;" title="Foto KTP" class="mr-1">
+                                        <?php if (!empty($p['ft_ktp057'])) : ?>
+                                            <img src="<?= base_url('img/' . $p['ft_ktp057']); ?>" style="width: 60px; height: auto;" title="Foto KTP" class="mr-1">
                                         <?php endif; ?>
-                                        <?php if (!empty($p['ft_sim_a'])) : ?>
-                                            <img src="<?= base_url('img/' . $p['ft_sim_a']); ?>" style="width: 60px; height: auto;" title="Foto SIM A">
+                                        <?php if (!empty($p['ft_sim_a057'])) : ?>
+                                            <img src="<?= base_url('img/' . $p['ft_sim_a057']); ?>" style="width: 60px; height: auto;" title="Foto SIM A">
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -77,4 +77,3 @@
     </div>
   </div>
 </div>
-<!-- /.content-wrapper -->
