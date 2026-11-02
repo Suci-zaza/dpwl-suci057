@@ -1,35 +1,35 @@
 <?php
-class Mobil_c extends Controller
+class Penyewa_C057 extends Controller
 {
     public function index()
     {
-        $cekdata = $this->load->model('m_master/Mobil_M');
-        $dt['dbmobil'] = $cekdata->datamobil();
+        $cekdata = $this->load->model('m_master/Penyewa_M057');
+        $dt['dbpenyewa'] = $cekdata->datapenyewa();
         $this->load->view('layout/header');
         $this->load->view('layout/sidebar');
-        $this->load->view('v_master/mobilview', $dt);
+        $this->load->view('v_master/penyewaview', $dt);
         $this->load->view('layout/footer');
     }
 
-    public function create_mobil()
+    public function create_pen()
     {
         $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
         $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
 
         $this->load->view('layout/header');
         $this->load->view('layout/sidebar', $info);
-        $this->load->view('v_master/create_mobilview');
+        $this->load->view('v_master/create_penyewaview057');
         $this->load->view('layout/footer');
     }
     
     public function simpan()
     {
-        $mobil   = $this->load->model('m_master/Mobil_M');
-        $no_plat = $this->load->post('no_plat');
+        $penyewa     = $this->load->model('m_master/Penyewa_M057');
+        $user_plg057 = $this->load->post('user_plg057');
 
-        if ($mobil->cekplat($no_plat)) {
+        if ($penyewa->cekuser($user_plg057)) {
             echo "<script>
-                alert('No Plat sudah ada, silahkan gunakan No Plat lain');
+                alert('Username sudah ada, silahkan gunakan Username lain');
                 window.history.back();
             </script>";
             exit;
@@ -41,13 +41,12 @@ class Mobil_c extends Controller
         }
 
         $files = [
-            'ft_depan'    => 'Depan',
-            'ft_blkg'     => 'Belakang',
-            'ft_interior' => 'Interior'
+            'ft_ktp'   => 'KTP',
+            'ft_sim_a' => 'SIM_A'
         ];
 
         $nama_file_db = [];
-        $clean_plat   = str_replace([' ', '/'], '_', $no_plat);
+        $clean_user   = str_replace([' ', '/'], '_', $user_plg057);
 
         foreach ($files as $field_name => $prefix) {
             if (isset($_FILES[$field_name]) && $_FILES[$field_name]['error'] == 0) {
@@ -56,7 +55,7 @@ class Mobil_c extends Controller
                 $allowed  = ['jpg', 'jpeg', 'png'];
 
                 if (in_array($ekstensi, $allowed)) {
-                    $filename   = $prefix . '_' . $clean_plat . '.' . $ekstensi;
+                    $filename   = $prefix . '_' . $clean_user . '.' . $ekstensi;
                     $target_dir = $target_folder . $filename;
 
                     move_uploaded_file($nmgambar, $target_dir);
@@ -74,128 +73,131 @@ class Mobil_c extends Controller
         }
 
         $data = [
-            'no_plat'     => $no_plat,
-            'nm_mobil'    => $this->load->post('nm_mobil'),
-            'nkursi'      => $this->load->post('nkursi'),
-            'nbagasi'     => $this->load->post('nbagasi'),
-            'jns_mobil'   => $this->load->post('jns_mobil'),
-            'transmisi'   => $this->load->post('transmisi'),
-            'thn_buat'    => $this->load->post('thn_buat'),
-            'ft_depan'    => $nama_file_db['ft_depan'],
-            'ft_blkg'     => $nama_file_db['ft_blkg'],
-            'ft_interior' => $nama_file_db['ft_interior'],
-            'hrg_hari'    => $this->load->post('hrg_hari'),
-            'cttn_unit'   => $this->load->post('cttn_unit'),
-            'status_unit' => $this->load->post('status_unit')
+            'user_plg057'   => $user_plg057,
+            'Sandi057'      => $this->load->post('Sandi057'),
+            'Nik057'        => $this->load->post('Nik057'),
+            'nm_lngkp057'   => $this->load->post('nm_lngkp057'),
+            'no_hp057'      => $this->load->post('no_hp057'),
+            'almt_lngkp057' => $this->load->post('almt_lngkp057'),
+            'ft_ktp'        => $nama_file_db['ft_ktp'],
+            'ft_sim_a'      => $nama_file_db['ft_sim_a']
         ];
 
-        $simpan = $mobil->simpan($data);
+        $simpan = $penyewa->simpan($data);
 
         if ($simpan) {
             echo "<script>
-                alert('Data mobil berhasil disimpan!');
-                window.location.href = '" . base_url('Mobil_c/index') . "';
+                alert('Data penyewa berhasil disimpan!');
+                window.location.href = '" . base_url('Penyewa_C057/index') . "';
             </script>";
         } else {
             echo "<script>
-                alert('Data mobil gagal disimpan!');
+                alert('Data penyewa gagal disimpan!');
                 window.history.back();
             </script>";
         }
     }
 
-    public function edit($no_plat)
+    public function edit($user_plg057)
     {
         $email = $this->session->userdata('emailuser') ?? $this->session->userdata('username') ?? '';
         $info['nm_user'] = !empty($email) ? explode('@', $email)[0] : 'User';
 
-        $mobil = $this->load->model('m_master/Mobil_M');
-        $dt['mobil'] = $mobil->detailmobil($no_plat);
+        $penyewa       = $this->load->model('m_master/Penyewa_M057');
+        $dt['penyewa'] = $penyewa->detailpenyewa($user_plg057);
         $this->load->view('layout/header');
         $this->load->view('layout/sidebar', $info);
-        $this->load->view('v_master/update_mobilview', $dt);
+        $this->load->view('v_master/update_penyewaview057', $dt);
         $this->load->view('layout/footer');
     }
 
-    public function UpdateMobil()
+    public function UpdatePenyewa()
     {
-        $mobil = $this->load->model('m_master/Mobil_M');
+        $penyewa     = $this->load->model('m_master/Penyewa_M057');
+        $user_plg057 = $this->load->post('user_plg057');
 
-        $ft_depan      = 'Depan' . $this->load->post('no_plat');
-        $ft_depan_asli = $this->load->post('ft_depan_asli');
+        $ft_ktp_asli   = $this->load->post('ft_ktp_asli');
+        $ft_sim_a_asli = $this->load->post('ft_sim_a_asli');
+        $target_folder = dirname(__DIR__, 2) . '/img/';
 
-        // upload gambar baru -----------------------------------------------
-        if (isset($_FILES['ft_depan']) && $_FILES['ft_depan']['error'] != UPLOAD_ERR_NO_FILE) {
-            $nmgambar   = $_FILES['ft_depan']['tmp_name'];
-            $ekstensi   = explode(".", $_FILES["ft_depan"]["name"]);
-            $ekstensi   = end($ekstensi);
-            $ft_depan   = $ft_depan . '.' . $ekstensi;
-            $target_dir = dirname(__DIR__, 2) . '/img/' . $ft_depan;
-
-            if ($ekstensi != "jpg" && $ekstensi != "png" && $ekstensi != "jpeg") {
-                echo "<script>alert('Gagal simpan gambar depan, format jpg, png, dan jpeg..!');</script>";
-            } else {
+        // --- Upload foto KTP baru ---
+        if (isset($_FILES['ft_ktp']) && $_FILES['ft_ktp']['error'] != UPLOAD_ERR_NO_FILE) {
+            $nmgambar = $_FILES['ft_ktp']['tmp_name'];
+            $ekstensi = strtolower(pathinfo($_FILES['ft_ktp']['name'], PATHINFO_EXTENSION));
+            if (in_array($ekstensi, ['jpg', 'png', 'jpeg'])) {
+                $ft_ktp     = 'KTP_' . $user_plg057 . '.' . $ekstensi;
+                $target_dir = $target_folder . $ft_ktp;
                 move_uploaded_file($nmgambar, $target_dir);
+            } else {
+                $ft_ktp = $ft_ktp_asli;
             }
         } else {
-            $ft_depan = $ft_depan_asli;
-            echo "<script>alert('Tidak ada gambar depan yang dipilih');</script>";
+            $ft_ktp = $ft_ktp_asli;
         }
-        // end upload gambar baru -------------------------------------------
+
+        // --- Upload foto SIM A baru ---
+        if (isset($_FILES['ft_sim_a']) && $_FILES['ft_sim_a']['error'] != UPLOAD_ERR_NO_FILE) {
+            $nmgambar = $_FILES['ft_sim_a']['tmp_name'];
+            $ekstensi = strtolower(pathinfo($_FILES['ft_sim_a']['name'], PATHINFO_EXTENSION));
+            if (in_array($ekstensi, ['jpg', 'png', 'jpeg'])) {
+                $ft_sim_a   = 'SIM_A_' . $user_plg057 . '.' . $ekstensi;
+                $target_dir = $target_folder . $ft_sim_a;
+                move_uploaded_file($nmgambar, $target_dir);
+            } else {
+                $ft_sim_a = $ft_sim_a_asli;
+            }
+        } else {
+            $ft_sim_a = $ft_sim_a_asli;
+        }
 
         $data = [
-            'no_plat'     => $this->load->post('no_plat'),
-            'nm_mobil'    => $this->load->post('nm_mobil'),
-            'nkursi'      => $this->load->post('nkursi'),
-            'nbagasi'     => $this->load->post('nbagasi'),
-            'jns_mobil'   => $this->load->post('jns_mobil'),
-            'transmisi'   => $this->load->post('transmisi'),
-            'thn_buat'    => $this->load->post('thn_buat'),
-            'ft_depan'    => $ft_depan,
-            'hrg_hari'    => $this->load->post('hrg_hari'),
-            'cttn_unit'   => $this->load->post('cttn_unit'),
-            'status_unit' => $this->load->post('status_unit')
+            'user_plg057'   => $user_plg057,
+            'Sandi057'      => $this->load->post('Sandi057'),
+            'Nik057'        => $this->load->post('Nik057'),
+            'nm_lngkp057'   => $this->load->post('nm_lngkp057'),
+            'no_hp057'      => $this->load->post('no_hp057'),
+            'almt_lngkp057' => $this->load->post('almt_lngkp057'),
+            'ft_ktp'        => $ft_ktp,
+            'ft_sim_a'      => $ft_sim_a
         ];
 
-        $simpan = $mobil->UbahDtMobil($data);
+        $simpan = $penyewa->UbahDtPenyewa($data);
         if ($simpan) {
             echo "<script>
-                alert('Data mobil berhasil diubah!');
-                window.location.href = '" . base_url('Mobil_c/index') . "';
+                alert('Data penyewa berhasil diubah!');
+                window.location.href = '" . base_url('Penyewa_C057/index') . "';
             </script>";
         } else {
             echo "<script>
-                alert('Data mobil gagal diubah!');
+                alert('Data penyewa gagal diubah!');
                 window.history.back();
             </script>";
         }
     }
 
-    // --- FUNCTION HAPUS DARI GAMBAR ---
-    public function hapus($no_plat)
+    public function hapus($user_plg057)
     {
-        $mobil = $this->load->model('m_master/Mobil_M');
-        $dt['Gambar_Mobil'] = $mobil->detailmobil($no_plat);
-        $ft_depan    = $dt['Gambar_Mobil']['ft_depan'];
-        $ft_blkg     = $dt['Gambar_Mobil']['ft_blkg'];
-        $ft_interior = $dt['Gambar_Mobil']['ft_interior'];
+        $penyewa       = $this->load->model('m_master/Penyewa_M057');
+        $dt['Penyewa'] = $penyewa->detailpenyewa($user_plg057);
+        $ft_ktp   = $dt['Penyewa']['ft_ktp'];
+        $ft_sim_a = $dt['Penyewa']['ft_sim_a'];
 
-        $hapus = $mobil->HapusDtMobil($no_plat);
+        $hapus = $penyewa->HapusDtPenyewa($user_plg057);
         if ($hapus) {
             $folder = dirname(__DIR__, 2) . '/img/';
-            $gambar = [$ft_depan, $ft_blkg, $ft_interior];
+            $gambar = [$ft_ktp, $ft_sim_a];
             foreach ($gambar as $file) {
                 if (!empty($file) && file_exists($folder . $file)) {
                     unlink($folder . $file);
                 }
             }
             echo "<script>
-                alert('Data mobil berhasil dihapus!');
-                window.location.href = '" . base_url('Mobil_c/index') . "';
+                alert('Data penyewa berhasil dihapus!');
+                window.location.href = '" . base_url('Penyewa_C057/index') . "';
             </script>";
         } else {
             echo "<script>
-                alert('Data mobil gagal dihapus!');
+                alert('Data penyewa gagal dihapus!');
                 window.history.back();
             </script>";
         }
